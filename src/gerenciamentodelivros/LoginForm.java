@@ -6,6 +6,7 @@ package gerenciamentodelivros;
 
 import javax.swing.JOptionPane;
 // ...
+
 /**
  *
  * @author gab
@@ -94,32 +95,35 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-  String username = jTextField1.getText().trim(); // Remova espaços em branco
-    char[] passwordArray = jPasswordField1.getPassword();
-    String password = new String(passwordArray).trim();
+        String username = jTextField1.getText().trim(); // Remova espaços em branco
+        char[] passwordArray = jPasswordField1.getPassword();
+        String password = new String(passwordArray).trim();
 
-    // Verifique se o nome de usuário ou a senha estão vazios.
-    if (username.isEmpty() || password.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Nome de usuário e senha não podem estar vazios!");
-        return;
-    }
-
-    String userType = DatabaseConnection.isValidUser(username, password);
-
-    if (userType != null) {
-        if ("admin".equals(userType)) {
-            new AdminScreen().setVisible(true);
-        } else if ("comum".equals(userType)) {
-            new NextScreen().setVisible(true);
+        // Verifique se o nome de usuário ou a senha estão vazios.
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nome de usuário e senha não podem estar vazios!");
+            return;
         }
-        dispose(); // Fecha a tela de login
-    } else {
-        JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos!");
-    }
+
+        String userType = DatabaseConnection.isValidUser(username, password);
+
+        if (userType != null) {
+            if ("admin".equals(userType)) {
+                // Redireciona o administrador para a tela de cadastro de usuários
+                UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
+                userRegistrationForm.setVisible(true);
+                dispose(); // Fecha a tela de login
+            } else if ("comum".equals(userType)) {
+                new NextScreen().setVisible(true);
+                dispose(); // Fecha a tela de login
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos!");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-System.exit(0); // Encerra o programa
+        System.exit(0); // Encerra o programa
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
