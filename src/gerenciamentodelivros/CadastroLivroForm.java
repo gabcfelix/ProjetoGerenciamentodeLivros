@@ -113,13 +113,20 @@ public class CadastroLivroForm extends javax.swing.JFrame {
         int nota = Integer.parseInt(notaText);
 
         LivroDAO livroDAO = new LivroDAO();
-        int idUsuarioLogado = 1;
+        int idUsuarioLogado = 1; // Supondo que você tenha um método para obter o ID do usuário logado
         livroDAO.cadastrarLivro(titulo, autor, tipo, nota, idUsuarioLogado);
 
-        JOptionPane.showMessageDialog(this, "Livro cadastrado com sucesso!");
+    int resposta = JOptionPane.showConfirmDialog(this, "Livro cadastrado com sucesso! Deseja cadastrar outro?",
+            "Cadastro bem-sucedido", JOptionPane.YES_NO_OPTION);
 
+    if (resposta == JOptionPane.YES_OPTION) {
         limparCampos();
+    } else if (resposta == JOptionPane.NO_OPTION) {
+        // Direciona para a visualização de livros
+        new VisualizacaoLivrosForm().setVisible(true);
+        dispose(); // Fecha o formulário de cadastro
     }
+}
 
     private void limparCampos() {
         txtTitulo.setText("");

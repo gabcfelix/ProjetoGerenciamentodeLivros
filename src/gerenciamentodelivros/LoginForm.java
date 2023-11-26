@@ -89,19 +89,21 @@ public class LoginForm extends javax.swing.JFrame {
 
         String userType = DatabaseConnection.isValidUser(username, password);
 
-        if (userType != null) {
-            if ("admin".equals(userType)) {
-                UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
-                userRegistrationForm.setVisible(true);
-                dispose();
-            } else if ("comum".equals(userType)) {
-                CadastroLivroForm cadastroLivroForm = new CadastroLivroForm();
-                cadastroLivroForm.setVisible(true);
-                dispose();
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos!");
-        }
+if (userType != null) {
+    if ("admin".equals(userType)) {
+        // Abre a tela de cadastro de usuário administrador
+        UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
+        userRegistrationForm.setVisible(true);
+        dispose();
+    } else if ("comum".equals(userType)) {
+        // Abre a tela com as opções de visualização e cadastro de livros
+        OpcoesUsuarioComumForm opcoesUsuarioComumForm = new OpcoesUsuarioComumForm();
+        opcoesUsuarioComumForm.setVisible(true);
+        dispose();
+    }
+} else {
+    JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos!");
+}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

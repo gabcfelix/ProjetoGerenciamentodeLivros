@@ -2,7 +2,10 @@ package gerenciamentodelivros;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LivroDAO {
 
@@ -32,5 +35,31 @@ public class LivroDAO {
                 ex.printStackTrace();
             }
         }
+    }
+
+    public static List<Livro> obterLivrosOrdenados() {
+        List<Livro> livros = new ArrayList<>();
+
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM livros ORDER BY titulo"); ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Livro livro = new Livro(
+                        resultSet.getInt("id"),
+                        resultSet.getString("titulo"),
+                        resultSet.getString("autor"),
+                        resultSet.getString("tipo"),
+                        resultSet.getInt("nota")
+                );
+
+                livros.add(livro);
+            }
+
+            System.out.println("Quantidade de livros encontrados na consulta SQL: " + livros.size());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return livros;
     }
 }
